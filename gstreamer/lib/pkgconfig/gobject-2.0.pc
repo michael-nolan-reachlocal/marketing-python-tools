@@ -1,0 +1,12 @@
+prefix=/c/gstreamer/1.0/x86_64
+exec_prefix=${prefix}
+libdir=/c/gstreamer/1.0/x86_64/lib
+includedir=${prefix}/include
+
+Name: GObject
+Description: GLib Type, Object, Parameter and Signal Library
+Requires: glib-2.0
+Version: 2.40.0
+Libs: -L${libdir} -lgobject-2.0
+Libs.private: -Lc:/gstreamer/1.0/x86_64/lib -lffi 
+Cflags:

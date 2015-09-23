@@ -1,0 +1,52 @@
+Metadata-Version: 2.0
+Name: sphinxcontrib-blockdiag
+Version: 1.5.1
+Summary: Sphinx "blockdiag" extension
+Home-page: http://bitbucket.org/birkenfeld/sphinx-contrib
+Author: Takeshi KOMIYA
+Author-email: i.tkomiya@gmail.com
+License: BSD
+Download-URL: http://pypi.python.org/pypi/sphinxcontrib-blockdiag
+Platform: any
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Classifier: Environment :: Web Environment
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3.2
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Topic :: Documentation
+Classifier: Topic :: Utilities
+Requires-Dist: blockdiag (>=1.5.0)
+Requires-Dist: Sphinx (>=0.6)
+Requires-Dist: setuptools
+
+=======================
+sphinxcontrib-blockdiag
+=======================
+
+A sphinx extension for embedding block diagram using blockdiag_.
+
+This extension enables you to insert block diagrams into your document.
+Following code is an example::
+
+   .. blockdiag::
+
+      diagram {
+        A -> B -> C;
+             B -> D;
+      }
+
+.. _blockdiag: http://bitbucket.org/blockdiag/blockdiag/
+
+
+For more details, see `online documentation`_ at http://blockdiag.com/.
+
+.. _online documentation: http://blockdiag.com/en/blockdiag/sphinxcontrib.html
+
+

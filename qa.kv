@@ -1,0 +1,516 @@
+#:kivy 1.0.9
+
+# Country buttons: Adds the URL prefix for reachlocal.com + dev domains
+<CButton@CheckBox>:
+    size_hint: 0.2, 1
+    text_size: self.size
+    font_size: '10px'
+
+# Domain Buttons: Sets the domain to scan.
+<DomButton@CheckBox>:
+    size_hint: 0.2, 1
+    text_size: self.size
+    font_size: '10px'
+    group: 'domains'
+
+<OptButton@CheckBox>:
+    size_hint: 0.2, 1
+    text_size: self.size
+    font_size: '10px'
+
+<ReportOptButton@CheckBox>:
+    size_hint: 0.2, 1
+    text_size: self.size
+    font_size: '10px'
+
+<HBox@BoxLayout>:
+    orientation: "horizontal"
+
+<VBox@BoxLayout>:
+    orientation: "vertical"
+
+<AppScreen>:
+    id: AppScreen
+    name: "this"
+    canvas:
+        Color:
+            rgb: 0,0,0
+        Rectangle:
+            pos: self.pos
+            size: 600,1000
+    # Divide the screen into vertical sections
+    VBox:
+        # Report Window + Domain options
+        HBox:
+            size_hint: 1,.7
+            # Main Report Area
+            VBox:
+                size_hint: .7, 1
+                TabbedPanel:
+                    do_default_tab: False
+                    TabbedPanelItem:
+                        text: 'Scanner'
+                        id: report_aggregate
+                        VBox:
+                            HBox:
+                                size_hint: 1,0.75
+                                VBox:
+                                    size_hint: 0.7,1
+                                    Label:
+                                        id: welcome_text
+                                        text: "Make your selections and click Start to begin"
+                                    GridLayout:
+                                        size_hint: 1,0
+                                        id: report_aggregate_grid
+                                        cols:4
+                                    Label:
+                                        canvas.before:
+                                            Color:
+                                                rgb: .4,.5,.5
+                                            Rectangle:
+                                                pos: self.pos
+                                                size: self.size
+                                        size_hint: 1,0.1
+                                        id: active_url
+                                        text_size: self.size
+                                        text: ""
+                                Accordion:
+                                    orientation: 'vertical'
+                                    canvas.before:
+                                        Color:
+                                            rgb: 0,0,0
+                                        Rectangle:
+                                            pos: self.pos
+                                            size: self.size
+                                    size_hint: 0.3, 1
+                                    AccordionItem:
+                                        collapse: False
+                                        title: "Domain Options"
+                                        VBox:
+                                            HBox:
+                                                DomButton:
+                                                    active: False
+                                                    domain: "http://phoenix"
+                                                    id: mikedev
+                                                Label:
+                                                    text: "Mike's dev"
+                                            HBox:
+                                                DomButton:
+                                                    domain: "http://reachlocaldev.prod.acquia-sites.com"
+                                                    active: True
+                                                    id: adev
+                                                Label:
+                                                    text: "Acquia Dev"
+                                            HBox:
+                                                DomButton:
+                                                    active: False
+                                                    domain: "http://reachlocalstg.prod.acquia-sites.com"
+                                                    id: astg
+                                                Label:
+                                                    text: "Acquia Stage"
+                                            HBox:
+                                                DomButton:
+                                                    active: False
+                                                    domain: "http://reachlocal.prod.acquia-sites.com"
+                                                    id: alive
+                                                Label:
+                                                    text: "Acquia Live"
+                                            HBox:
+                                                DomButton:
+                                                    active: False
+                                                    domain: "https://www.reachlocal.com"
+                                                    id: rlcom
+                                                Label:
+                                                    text: "Reachlocal.com"
+                                            HBox:
+                                                DomButton:
+                                                    active: False
+                                                    domain: "http://blog.reachlocal.com"
+                                                    id: blog
+                                                Label:
+                                                    text: "Reachlocal blog"
+                                            HBox:
+                                                DomButton:
+                                                    active: False
+                                                    domain: "http://www.reachlocal-jp.com"
+                                                    id: rlcom
+                                                Label:
+                                                    text: "Reachlocal-jp.com"
+                                            HBox:
+                                                DomButton:
+                                                    active: False
+                                                    domain: "csv_import"
+                                                    file_path: ""
+                                                    id: import_list
+                                                Label:
+                                                    id: import_list_label
+                                                    text: "CSV list of URLs"
+                                    AccordionItem:
+                                        title: "General Scan Options"
+                                        VBox:
+                                            HBox:
+                                                OptButton:
+                                                    active: False
+                                                    id: files
+                                                Label:
+                                                    text: "Check Internal File Links"
+                                            HBox:
+                                                OptButton:
+                                                    active: False
+                                                    id: external
+                                                Label:
+                                                    text: "Check External Links"
+                                            HBox:
+                                                OptButton:
+                                                    active: False
+                                                    id: allitems
+                                                Label:
+                                                    text: "Report all links on all pages"
+                                            HBox:
+                                                OptButton:
+                                                    active: False
+                                                    id: meta
+                                                    active: True
+                                                Label:
+                                                    text: "Collect Metadata"
+                                    AccordionItem:
+                                        title: "CSV List Options"
+                                        VBox:
+                                            HBox:
+                                                OptButton:
+                                                    active: False
+                                                    id: index-only
+                                                Label:
+                                                    text: "Scan links in list only"
+                            VBox:
+                                size_hint: 1,0.25
+                                canvas.before:
+                                    Color:
+                                        rgb: 0,0,0
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+                                # Country Selection Label
+                                VBox:
+                                    size_hint: 1, .05
+                                    Label:
+                                        text: "Countries"
+                                # Country options
+                                VBox:
+                                    size_hint: 1, .1
+                                    HBox:
+                                        CButton:
+                                            urlprefix: '/us/en'
+                                            exclude: '800','855','030','020','0720','1300'
+                                            active: True
+                                            id: us_en
+                                        Label:
+                                            text: 'us-en'
+                                        CButton:
+                                            urlprefix: '/us/es'
+                                            exclude: '800','855','030','020','0720','1300'
+                                            active: False
+                                            id: us_es
+                                        Label:
+                                            text: 'us-es'
+                                        CButton:
+                                            urlprefix: '/ca/en'
+                                            exclude: '800','855','030','020','0720','1300'
+                                            active: False
+                                            id: ca
+                                        Label:
+                                            text: 'ca'
+                                        CButton:
+                                            urlprefix: '/at/de'
+                                            exclude: '800','855','030','020','0720','1300'
+                                            active: False
+                                            id: at
+                                        Label:
+                                            text: 'at'
+                                        CButton:
+                                            urlprefix: '/au/en'
+                                            exclude: '800','855','030','020','0720','1300'
+                                            active: False
+                                            id: au
+                                        Label:
+                                            text: 'au'
+                                        CButton:
+                                            urlprefix: '/br/pt'
+                                            exclude: '800','855','030','020','0720','1300'
+                                            active: False
+                                            id: br
+                                        Label:
+                                            text: 'br'
+                                    HBox:
+                                        CButton:
+                                            urlprefix: '/de/de'
+                                            exclude: '800','855','030','020','0720','1300'
+                                            active: False
+                                            id: de
+                                        Label:
+                                            text: 'de'
+                                        CButton:
+                                            urlprefix: '/jp/ja'
+                                            exclude: '800','855','030','020','0720','1300'
+                                            active: False
+                                            id: jp
+                                        Label:
+                                            text: 'jp'
+                                        CButton:
+                                            urlprefix: '/mx/es'
+                                            exclude: '800','855','030','020','0720','1300'
+                                            active: False
+                                            id: mx
+                                        Label:
+                                            text: 'mx'
+                                        CButton:
+                                            urlprefix: '/nl/nl'
+                                            exclude: '800','855','030','020','0720','1300','about:blank','about%30blank'
+                                            active: False
+                                            id: nl
+                                        Label:
+                                            text: 'nl'
+                                        CButton:
+                                            urlprefix: '/nz/en'
+                                            exclude: '800','855','030','020','0720','1300'
+                                            active: False
+                                            id: nz
+                                        Label:
+                                            text: 'nz'
+                                        CButton:
+                                            urlprefix: '/uk/en'
+                                            exclude: '800','855','030','020','0720','1300'
+                                            active: False
+                                            id: uk
+                                        Label:
+                                            text: 'uk'
+                                    HBox:
+                                        CButton:
+                                            urlprefix: 'none'
+                                            exclude: '800','855','030','020','0720','1300','javascript:',"'"
+                                            active: False
+                                            id: none
+                                        Label:
+                                            text: 'none'
+                                        HBox:
+                                            size_hint: 0.2, 1
+                                        HBox:
+                                        HBox:
+                                            size_hint: 0.2, 1
+                                        HBox:
+                                        HBox:
+                                            size_hint: 0.2, 1
+                                        HBox:
+                                        HBox:
+                                            size_hint: 0.2, 1
+                                        HBox:
+                                        HBox:
+                                            size_hint: 0.2, 1
+                                        HBox:
+                                # Spacer
+                                VBox:
+                                    size_hint: 1, .05
+                                # Launch Button
+                                HBox:
+                                    id: bottomBox
+                                    size_hint: 1, .05
+                                    HBox:
+                                        size_hint: 0.4, 1
+                                    HBox:
+                                        size_hint: 0.2, 1
+                                        Button:
+                                            id: runButton
+                                            text: "Start the Scan"
+                                            on_press: root.start_scan()
+                                            
+                                    HBox:
+                                        size_hint: 0.4, 1
+
+                    TabbedPanelItem:
+                        text: 'Import URLs'
+                        id: file_chooser_tab
+                        VBox:
+                            Label:
+                                id: import_dialog
+                                text: "Please select a .csv file containing a single column of URLs"
+                                size_hint: 1, .05
+                            FileChooserListView:
+                                canvas.before:
+                                    Color:
+                                        rgb: .4,.5,.5
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+                                on_selection: root.select(*args)
+                    TabbedPanelItem:
+                        text: 'Reports'
+                        id: report_detailed
+                        VBox:
+                            Label:
+                                size_hint: 1, 0.1
+                                text: "Include These Fields in Report"
+                            HBox:
+                                size_hint: 1, 0.15
+                                HBox:
+                                    ReportOptButton:
+                                        active: True
+                                        id: "field_url"
+                                        opt: "field_url"
+                                    Label:
+                                        text: "URL Scanned"
+                                HBox:
+                                    ReportOptButton:
+                                        active: True
+                                        id: "field_source"
+                                        opt: "field_source"
+                                    Label:
+                                        text: "URL Source"
+                                HBox:
+                                    ReportOptButton:
+                                        active: True
+                                        id: "field_section"
+                                        opt: "field_section"
+                                    Label:
+                                        text: "URL Section"
+                                HBox:
+                                    ReportOptButton:
+                                        active: True
+                                        id: "field_status"
+                                        opt: "field_status"
+                                    Label:
+                                        text: "Response Code"
+                                HBox:
+                                    ReportOptButton:
+                                        active: True
+                                        id: "field_time"
+                                        opt: "field_time"
+                                    Label:
+                                        text: "Time to DOM Load"
+                            HBox:
+                                size_hint: 1, 0.15
+                                HBox:
+                                    ReportOptButton:
+                                        active: True
+                                        id: "field_cache"
+                                        opt: "field_cache"
+                                    Label:
+                                        text: "Cache Hit/Miss"
+                                HBox:
+                                    ReportOptButton:
+                                        active: True
+                                        id: "meta_title"
+                                        opt: "meta_title"
+                                    Label:
+                                        text: "Meta: Title"
+                                HBox:
+                                    ReportOptButton:
+                                        active: True
+                                        id: "meta_description"
+                                        opt: "meta_description"
+                                    Label:
+                                        text: "Meta: Desctiption"
+                                HBox:
+                                    ReportOptButton:
+                                        active: True
+                                        id: "meta_keywords"
+                                        opt: "meta_keywords"
+                                    Label:
+                                        text: "Meta: Keyword"
+                                HBox:
+                                    ReportOptButton:
+                                        active: True
+                                        id: "meta_abstract"
+                                        opt: "meta_abstract"
+                                    Label:
+                                        text: "Meta: Abstract"
+                            HBox:
+                                size_hint: 1, 0.15
+                                HBox:
+                                    ReportOptButton:
+                                        active: True
+                                        id: "meta_img_alt"
+                                        opt: "meta_img_alt"
+                                    Label:
+                                        text: "Meta: Image Alt"
+                                HBox:
+                                    ReportOptButton:
+                                        active: True
+                                        id: "meta_img_title"
+                                        opt: "meta_img_title"
+                                    Label:
+                                        text: "Meta: Image Title"
+                                HBox:
+                                HBox:
+                                HBox:
+                            Label:
+                                size_hint: 1, 0.1
+                                text: "Report Options"
+                            VBox:
+                                size_hint: 1, 0.4
+                                HBox:
+                                    ReportOptButton:
+                                        id: "sort_by_prefix"
+                                        opt: "sort_by_prefix"
+                                        active: True
+                                    Label:
+                                        size_hint: 0.4, 1
+                                        text: "Filter results by country prefix"
+                                        text_size: self.size
+                                        halign: 'left'
+                                        valign: 'middle'
+                                    HBox:
+                                        size_hint: 0.4, 1
+                                HBox:
+                                    ReportOptButton:
+                                        id: "include_raw_report"
+                                        opt: "include_raw_report"
+                                        active: True
+                                    Label:
+                                        size_hint: 0.4, 1
+                                        text: "Include a raw report with selected fields"
+                                        text_size: self.size
+                                        halign: 'left'
+                                        valign: 'middle'
+                                    HBox:
+                                        size_hint: 0.4, 1
+                                HBox:
+                                    ReportOptButton:
+                                        id: "include_count_report"
+                                        opt: "include_count_report"
+                                        active: True
+                                    Label:
+                                        size_hint: 0.4, 1
+                                        text: "Include count reports for each field type (Average for time)"
+                                        text_size: self.size
+                                        halign: 'left'
+                                        valign: 'middle'
+                                    HBox:
+                                        size_hint: 0.4, 1
+                                HBox:
+                                    ReportOptButton:
+                                        id: "include_image_report"
+                                        opt: "include_image_report"
+                                        active: True
+                                    Label:
+                                        size_hint: 0.4, 1
+                                        text: "Include Image Metadata report"
+                                        text_size: self.size
+                                        halign: 'left'
+                                        valign: 'middle'
+                                    HBox:
+                                        size_hint: 0.4, 1
+                            #Start button
+                            HBox:
+                                size_hint: 1, 0.1
+                                HBox:
+                                    size_hint: 0.3, 1
+                                Button:
+                                    text: "Generate Report"
+                                    size_hint: 0.2, 1
+                                    on_press: root.generate_detail_report()
+                                Button:
+                                    text: 'Raw Export'
+                                    on_press: root.export_raw_to_csv()
+                                    size_hint: 0.2, 1
+                                HBox:
+                                    size_hint: 0.3, 1
